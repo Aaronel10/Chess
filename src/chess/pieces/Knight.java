@@ -4,6 +4,8 @@ import chess.Team;
 import chess.board.Board;
 import chess.board.BoardUtils;
 import chess.board.Move;
+import chess.board.Move.AttackingMove;
+import chess.board.Move.MajorMove;
 import chess.board.Tile;
 
 import java.util.ArrayList;
@@ -41,14 +43,14 @@ public class Knight extends Piece{
 
                 if(!possibleTileDestination.isTileOccupied())
                 {// tile to move to is empty so add it to legal moves list
-                    legalMoves.add(new Move(possibleTileDestination));
+                    legalMoves.add(new MajorMove(board, this, possibleCoordinate));
                 } else
                 {
                     Piece pieceAtDestination = possibleTileDestination.getPiece();
                     Team pieceTeam = pieceAtDestination.getPieceTeam();
                     if(this.pieceTeam != pieceTeam)
                     {
-                        legalMoves.add(new Move());
+                        legalMoves.add(new AttackingMove(board, this, possibleCoordinate, pieceAtDestination));
                     }else{
 
                     }
@@ -76,7 +78,7 @@ public class Knight extends Piece{
 
     private static boolean isEighthColumnExclusion(int currentPosition, int offset)
     {
-        return BoardUtils.EIGTH_COLUMN[currentPosition] && ((offset== -15) || (offset == -6) || (offset == 10) || (offset == 17));
+        return BoardUtils.EIGHTH_COLUMN[currentPosition] && ((offset== -15) || (offset == -6) || (offset == 10) || (offset == 17));
     }
 
 
