@@ -16,7 +16,7 @@ public abstract class Piece {
     }
 
     public Team getPieceTeam() {
-        return pieceTeam;
+        return this.pieceTeam;
     }
 
 
@@ -34,6 +34,26 @@ public abstract class Piece {
 
     public abstract Collection<Move> calculateLegalMoves(final Board board);
 
+    public enum Piece_Type {
 
+        PAWN( "P"),
+        KNIGHT( "N"),
+        BISHOP("B"),
+        ROOK("R"),
+        QUEEN( "Q"),
+        KING( "K");
+
+        private final String pieceName;
+
+        @Override
+        public String toString() {
+            return this.pieceName;
+        }
+
+        Piece_Type(final String pieceName) {
+            this.pieceName = pieceName;
+        }
+
+    }
 
 }

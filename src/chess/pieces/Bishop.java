@@ -17,7 +17,7 @@ public class Bishop extends Piece {
 
     private final static int[] possible_vector_moves = {-9, -7, 7, 9};
 
-    private Bishop(int piecePosition, Team pieceTeam)
+    public Bishop(int piecePosition, Team pieceTeam)
     {
         super(piecePosition, pieceTeam);
     }
@@ -72,5 +72,8 @@ public class Bishop extends Piece {
         return BoardUtils.EIGHTH_COLUMN [currentPosition] && (candidateOffset == -7 || candidateOffset == 9);
     }
 
-
+    @Override
+    public String toString() {
+        return Piece.Piece_Type.BISHOP.toString();
+    }
 }

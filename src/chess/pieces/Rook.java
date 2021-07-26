@@ -16,7 +16,7 @@ public class Rook extends Piece{
     private final static int[] possible_vector_moves = {-8, -1, 1, 8};
 
 
-    private Rook(int piecePosition, Team pieceTeam) {
+    public Rook(int piecePosition, Team pieceTeam) {
         super(piecePosition, pieceTeam);
     }
 
@@ -59,7 +59,7 @@ public class Rook extends Piece{
         return Collections.unmodifiableList(legalMoves);
     }
 
-    // two column exceptions where algorithm fails 
+    // two column exceptions where algorithm fails
     private static boolean isFirstColumnException(int currentPosition, int candidateOffset)
     {
         return BoardUtils.FIRST_COLUMN[currentPosition] && (candidateOffset == -1);
@@ -70,5 +70,9 @@ public class Rook extends Piece{
         return BoardUtils.EIGHTH_COLUMN [currentPosition] && (candidateOffset == 1);
     }
 
+    @Override
+    public String toString() {
+        return Piece.Piece_Type.ROOK.toString();
+    }
 
 }

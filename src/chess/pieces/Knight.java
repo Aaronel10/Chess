@@ -17,7 +17,7 @@ public class Knight extends Piece{
 
     private final static int[] possible_moves = {-17, -15, -10, -6, 6, 10, 15, 17};
 
-    Knight(final int piecePosition,final Team pieceTeam) {
+    public Knight(final int piecePosition,final Team pieceTeam) {
         super(piecePosition, pieceTeam);
     }
 
@@ -79,6 +79,10 @@ public class Knight extends Piece{
         return BoardUtils.EIGHTH_COLUMN[currentPosition] && ((offset== -15) || (offset == -6) || (offset == 10) || (offset == 17));
     }
 
+    @Override
+    public String toString() {
+        return Piece.Piece_Type.KNIGHT.toString();
+    }
 
 
 }

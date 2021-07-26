@@ -15,7 +15,7 @@ public class King extends Piece {
     private static final int[] possible_moves = {-9, -8, -7, -1, 1, 7, 8 ,9};
 
 
-    King(int piecePosition, Team pieceTeam) {
+    public King(int piecePosition, Team pieceTeam) {
         super(piecePosition, pieceTeam);
     }
 
@@ -58,6 +58,11 @@ public class King extends Piece {
     private static boolean isEighthColumnExclusion(int currentPosition, int offset)
     {
         return BoardUtils.EIGHTH_COLUMN[currentPosition] && ((offset== -7) || (offset == 1) || (offset == 9));
+    }
+
+    @Override
+    public String toString() {
+        return Piece.Piece_Type.KING.toString();
     }
 
 }

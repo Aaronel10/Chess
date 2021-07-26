@@ -14,7 +14,7 @@ import java.util.List;
 public class Queen extends Piece{
     private final static int[] possible_vector_moves = {-9, -8, -7, -1, 1, 7, 8, 9};
 
-    private Queen(int piecePosition, Team pieceTeam) {
+    public Queen(int piecePosition, Team pieceTeam) {
         super(piecePosition, pieceTeam);
     }
 
@@ -67,5 +67,9 @@ public class Queen extends Piece{
     {
         return BoardUtils.EIGHTH_COLUMN [currentPosition] && (candidateOffset == 1 || candidateOffset == -7 || candidateOffset == 9);
     }
-    
+
+    @Override
+    public String toString() {
+        return Piece.Piece_Type.QUEEN.toString();
+    }
 }
