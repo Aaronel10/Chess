@@ -16,7 +16,7 @@ public class King extends Piece {
 
 
     public King(int piecePosition, Team pieceTeam) {
-        super(piecePosition, pieceTeam);
+        super(piecePosition, pieceTeam, Piece_Type.KING);
     }
 
     @Override
@@ -65,4 +65,7 @@ public class King extends Piece {
         return Piece.Piece_Type.KING.toString();
     }
 
+    public Boolean isKing(){
+        return true;
+    }
 }

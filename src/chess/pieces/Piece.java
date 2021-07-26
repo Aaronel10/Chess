@@ -7,6 +7,8 @@ import java.util.Collection;
 
 
 public abstract class Piece {
+
+    protected final Piece_Type pieceType;
     protected final int piecePosition;
     protected final Team pieceTeam;
     protected final boolean isFirstMove;
@@ -20,8 +22,9 @@ public abstract class Piece {
     }
 
 
-    Piece(final int piecePosition, final Team pieceTeam)
+    Piece(final int piecePosition, final Team pieceTeam, final Piece_Type pieceType)
     {
+        this.pieceType = pieceType;
         this.piecePosition = piecePosition;
         this.pieceTeam = pieceTeam;
         this.isFirstMove = false; // needs work still
@@ -31,7 +34,9 @@ public abstract class Piece {
         return this.isFirstMove;
     }
 
-
+    public Piece_Type getPieceType(){
+        return this.pieceType;
+    }
     public abstract Collection<Move> calculateLegalMoves(final Board board);
 
     public enum Piece_Type {
@@ -48,6 +53,10 @@ public abstract class Piece {
         @Override
         public String toString() {
             return this.pieceName;
+        }
+
+        public boolean isKing(){
+            return false;
         }
 
         Piece_Type(final String pieceName) {

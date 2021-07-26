@@ -3,6 +3,10 @@ package chess.board;
 import chess.Team;
 import chess.pieces.*;
 import chess.board.Board.*;
+import chess.player.BlackPlayer;
+import chess.player.Player;
+import chess.player.WhitePlayer;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -10,8 +14,20 @@ public class Board {
 
 
     private final List<Tile> gameBoard;
+
+    public Collection<Piece> getWhitePieces() {
+        return white_pieces;
+    }
+
+    public Collection<Piece> getBlackPieces() {
+        return black_pieces;
+    }
+
     private final Collection<Piece> white_pieces;
     private final Collection<Piece> black_pieces;
+
+    private final WhitePlayer whitePlayer;
+    private final BlackPlayer blackPlayer;
 
     private Board(Builder builder){
         this.gameBoard = createGameBoard(builder);
@@ -19,7 +35,12 @@ public class Board {
         this.black_pieces = calculateActivePieces(this.gameBoard, Team.BLACK);
         Collection <Move> whiteStandardLegalmoves = calculateLegalMoves(this.white_pieces);
         Collection <Move> blackStandardLegalMoves = calculateLegalMoves(this.black_pieces);
+
+        this.whitePlayer = new WhitePlayer(this, whiteStandardLegalmoves, blackStandardLegalMoves);
+        this.blackPlayer = new BlackPlayer(this, whiteStandardLegalmoves, blackStandardLegalMoves);
+
     }
+
 
     @Override
     public String toString(){
@@ -33,6 +54,15 @@ public class Board {
         }
         return builder.toString();
     }
+
+    public Player whitePlayer(){
+        return this.whitePlayer;
+    }
+    public Player blackPlayer(){
+        return this.blackPlayer;
+    }
+
+
 
     private Collection<Move> calculateLegalMoves(Collection<Piece> pieces) {
         List<Move> legalMoves = new ArrayList<>();
@@ -129,6 +159,7 @@ public class Board {
         public Builder setPiece(Piece piece){
             this.boardConfiguration.put(piece.getPiecePosition(), piece);
             return this;
+
         }
 
         public Builder setWhosTurnItIs(Team whosTurnItIs){
