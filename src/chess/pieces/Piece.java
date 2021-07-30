@@ -12,6 +12,8 @@ public abstract class Piece {
     protected final int piecePosition;
     protected final Team pieceTeam;
     protected final boolean isFirstMove;
+    // because our object is immutable we can just use a member field for hashcode instead of computing it each time
+    private final int cachedHashCode;
 
     public int getPiecePosition() {
         return piecePosition;
@@ -28,6 +30,33 @@ public abstract class Piece {
         this.piecePosition = piecePosition;
         this.pieceTeam = pieceTeam;
         this.isFirstMove = false; // needs work still
+        this.cachedHashCode = computeHashCode();
+    }
+
+    private int computeHashCode() {
+        int result = pieceType.hashCode();
+        result = 31 * result + pieceTeam.hashCode();
+        result = 31 * result + piecePosition;
+        result = 31 * result + (isFirstMove ? 1 : 0);
+        return result;
+    }
+
+    @Override
+    public boolean equals(final Object other){
+        if(this == other){
+            return true;
+        }
+        if( !(other instanceof Piece)){
+            return false;
+        }
+        final Piece otherPiece = (Piece) other;
+        return piecePosition == ((Piece) other).getPiecePosition() && otherPiece.getPieceType() == pieceType
+                && pieceTeam == ((Piece) other).getPieceTeam() && isFirstMove == otherPiece.isFirstMove();
+    }
+
+    @Override
+    public int hashCode(){
+        return this.cachedHashCode;
     }
 
     public boolean isFirstMove(){

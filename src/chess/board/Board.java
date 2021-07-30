@@ -152,6 +152,13 @@ public class Board {
         return this.currentPlayer;
     }
 
+    public Iterable<Move> getAllLegalMoves() { /// Using this instead of Iterables from Guava Library
+        List<Move> AllLegalMoves = new ArrayList<>();
+        AllLegalMoves.addAll(this.whitePlayer.getLegalMoves());
+        AllLegalMoves.addAll(this.blackPlayer.getLegalMoves());
+        return AllLegalMoves;
+    }
+
 
     public static class Builder { // builder class to help build an instance of a board
         Map<Integer, Piece> boardConfiguration;
