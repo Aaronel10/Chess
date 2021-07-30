@@ -5,6 +5,11 @@ import chess.pieces.Piece;
 public abstract class Move {
 
     final Board board;
+
+    public Piece getMovedPiece() {
+        return movedPiece;
+    }
+
     final Piece movedPiece;
     final int destinationCoordinate;
      Move(final Board board, final Piece movedPiece, final int destinationCoordinate)
@@ -28,7 +33,20 @@ public abstract class Move {
 
         @Override
         public Board execute() {
-            return null;
+            Board.Builder builder = new Board.Builder();
+
+            for(Piece piece: this.board.currentPlayer().getActivePieces()){
+                if(!this.movedPiece.equals(piece)){
+                    builder.setPiece(piece);
+                }
+            }
+
+            for(Piece piece: this.board.currentPlayer().getOpponent().getActivePieces()){
+                builder.setPiece(piece);
+            }
+            builder.setPiece(this.movedPiece.movePiece(this)); //set piece thats moving
+            builder.setMoveMaker(this.board.currentPlayer().getOpponent().getTeam());
+            return builder.build();
         }
     }
 

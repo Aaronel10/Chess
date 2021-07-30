@@ -5,7 +5,6 @@ import chess.board.Board;
 import chess.board.Move;
 import chess.pieces.King;
 import chess.pieces.Piece;
-import chess.board.Board.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -24,7 +23,6 @@ public abstract class Player {
         this.legalMoves = legalMoves;
         this.playerKing = establishKing();
         this.isInCheck = !Player.calculateAttacksOnTile(this.playerKing.getPiecePosition(), opponentMoves).isEmpty();
-
 
     }
 

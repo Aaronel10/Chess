@@ -51,6 +51,12 @@ public class King extends Piece {
         return Collections.unmodifiableList(legalMoves);
     }
 
+    @Override
+    public King movePiece(Move move) {
+        return new King(move.getDestinationCoordinate(), move.getMovedPiece().getPieceTeam());
+    }
+
+
     private static boolean isFirstColumnExclusion(int currentPosition, int offset)
     {
         return BoardUtils.FIRST_COLUMN[currentPosition] && ((offset== -1) || (offset == -9) || (offset == 7));

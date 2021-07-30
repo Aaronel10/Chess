@@ -61,6 +61,13 @@ public class Bishop extends Piece {
         return Collections.unmodifiableList(legalMoves);
     }
 
+    @Override
+    public Bishop movePiece(Move move) {
+        return new Bishop(move.getDestinationCoordinate(), move.getMovedPiece().getPieceTeam());
+        // this will create a new bishop everytime it moves
+        // Might switch out with lookup board containing all 12 possible pieces at all 64 squares for performance later
+    }
+
     // two column exceptions where algorithm fails
     private static boolean isFirstColumnException(int currentPosition, int candidateOffset)
     {

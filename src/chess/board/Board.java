@@ -39,7 +39,7 @@ public class Board {
 
         this.whitePlayer = new WhitePlayer(this, whiteStandardLegalmoves, blackStandardLegalMoves);
         this.blackPlayer = new BlackPlayer(this, whiteStandardLegalmoves, blackStandardLegalMoves);
-        this.currentPlayer = null;
+        this.currentPlayer = builder.nextMoveMaker.choosePlayer(this.whitePlayer, this.blackPlayer);
     }
 
 
@@ -142,7 +142,7 @@ public class Board {
 
 
         //white to move
-        builder.setWhosTurnItIs(Team.WHITE);
+        builder.setMoveMaker(Team.WHITE);
         //build the board
         return builder.build();
 
@@ -155,7 +155,7 @@ public class Board {
 
     public static class Builder { // builder class to help build an instance of a board
         Map<Integer, Piece> boardConfiguration;
-        Team whosTurnItIs;
+        Team nextMoveMaker;
 
         public Builder(){
             this.boardConfiguration = new HashMap<>();
@@ -166,8 +166,8 @@ public class Board {
 
         }
 
-        public Builder setWhosTurnItIs(Team whosTurnItIs){
-            this.whosTurnItIs = whosTurnItIs;
+        public Builder setMoveMaker(Team whosTurnItIs){
+            this.nextMoveMaker = whosTurnItIs;
             return this;
         }
 
