@@ -163,6 +163,7 @@ public class Board {
     public static class Builder { // builder class to help build an instance of a board
         Map<Integer, Piece> boardConfiguration;
         Team nextMoveMaker;
+        Pawn enPassantPawn;
 
         public Builder(){
             this.boardConfiguration = new HashMap<>();
@@ -182,6 +183,9 @@ public class Board {
             return new Board(this);
         }
 
+        public void setEnPassantPawn(Pawn movedPawn) {
+            this.enPassantPawn = movedPawn;
+        }
     }
 
 

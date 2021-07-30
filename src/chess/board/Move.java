@@ -1,10 +1,13 @@
 package chess.board;
 
+import chess.pieces.Pawn;
 import chess.pieces.Piece;
+
+import static chess.board.Board.*;
 
 public abstract class Move {
 
-    public static final NULL_MOVE = new NullMove();
+    public static final Move NULL_MOVE = new NullMove();
 
     final Board board;
 
@@ -22,6 +25,27 @@ public abstract class Move {
         this.destinationCoordinate = destinationCoordinate;
     }
 
+    @Override
+    public int hashCode(){
+         int prime = 31;
+         int result = 1;
+         result = prime * result + this.destinationCoordinate;
+         result = prime * result + this.movedPiece.hashCode();
+         return result;
+    }
+    @Override
+    public boolean equals(Object other){
+        if(this == other) {
+            return true;
+        }
+        if(!(other instanceof Move)){
+            return false;
+        }
+        Move otherMove = (Move) other;
+                return getDestinationCoordinate() == otherMove.getDestinationCoordinate() &&
+                getMovedPiece() == otherMove.getMovedPiece();
+
+    }
     public int getCurrentCoordinate(){
          return this.movedPiece.getPiecePosition();
     }
@@ -30,8 +54,19 @@ public abstract class Move {
          return this.destinationCoordinate;
     }
 
+    public boolean isAttack(){
+         return false;
+    }
+    public boolean isCastlingMove(){
+         return false;
+    }
+    public Piece getAttackedPiece(){
+         return null;
+    }
+
+
     public Board execute() {
-        Board.Builder builder = new Board.Builder();
+        Builder builder = new Builder();
 
         for(Piece piece: this.board.currentPlayer().getActivePieces()){
             if(!this.movedPiece.equals(piece)){
@@ -62,7 +97,30 @@ public abstract class Move {
             this.attackedPiece = attackedPiece;
 
         }
+        @Override
+        public int hashCode(){
+             return this.attackedPiece.hashCode() + super.hashCode();
+        }
+        @Override
+        public boolean equals(Object other){
+             if(this == other){
+                 return true;
+             }
+             if(!(other instanceof AttackingMove)){
+                 return false;
+             }
+             AttackingMove otherMove = (AttackingMove) other;
+            return super.equals(otherMove) && getAttackedPiece() == otherMove.getAttackedPiece();
+        }
 
+        @Override
+        public boolean isAttack(){
+             return true;
+        }
+        @Override
+        public Piece getAttackedPiece(){
+             return this.attackedPiece;
+        }
         @Override
         public Board execute() {
             return null;
@@ -90,6 +148,24 @@ public abstract class Move {
         public PawnJump(Board board, Piece movedPiece, int destinationCoordinate) {
             super(board, movedPiece, destinationCoordinate);
         }
+        @Override
+        public Board execute(){
+            Builder builder = new Builder();
+            for(Piece piece: this.board.currentPlayer().getActivePieces()){
+                if(this.movedPiece != piece){
+                    builder.setPiece(piece);
+                }
+            }
+            for(Piece piece: this.board.currentPlayer().getOpponent().getActivePieces()){
+                builder.setPiece(piece);
+            }
+            Pawn movedPawn = (Pawn)this.movedPiece.movePiece(this);
+            builder.setPiece(movedPawn);
+            builder.setEnPassantPawn(movedPawn);
+            builder.setMoveMaker(this.board.currentPlayer().getOpponent().getTeam());
+            return builder.build();
+        }
+
     }
 
 
@@ -112,14 +188,14 @@ public abstract class Move {
     }
 
 
-    public static final class NullMove extends Move {
+    public static class NullMove extends Move {
         public NullMove() {
             super(null, null, -1);
         }
 
         @Override
         public Board execute(){
-            throw new RuntimeException("cant execute null move")
+            throw new RuntimeException("cant execute null move");
         }
 
     }
