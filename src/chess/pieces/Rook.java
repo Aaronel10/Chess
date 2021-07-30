@@ -59,6 +59,7 @@ public class Rook extends Piece{
         return Collections.unmodifiableList(legalMoves);
     }
 
+
     // two column exceptions where algorithm fails
     private static boolean isFirstColumnException(int currentPosition, int candidateOffset)
     {
@@ -79,5 +80,6 @@ public class Rook extends Piece{
     public Rook movePiece(Move move) {
         return new Rook(move.getDestinationCoordinate(), move.getMovedPiece().getPieceTeam());
     }
+
 
 }

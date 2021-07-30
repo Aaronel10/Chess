@@ -72,12 +72,42 @@ public abstract class Piece {
 
     public enum Piece_Type {
 
-        PAWN( "P"),
-        KNIGHT( "N"),
-        BISHOP("B"),
-        ROOK("R"),
-        QUEEN( "Q"),
-        KING( "K");
+        PAWN( "P"){
+            @Override
+            public boolean isRook(){
+                return false;
+            }
+        },
+        KNIGHT( "N"){
+            @Override
+            public boolean isRook(){
+                return false;
+            }
+        },
+        BISHOP("B"){
+            @Override
+            public boolean isRook(){
+                return false;
+            }
+        },
+        ROOK("R"){
+            @Override
+            public boolean isRook(){
+                return true;
+            }
+        },
+        QUEEN( "Q"){
+            @Override
+            public boolean isRook(){
+                return false;
+            }
+        },
+        KING( "K"){
+            @Override
+            public boolean isRook(){
+                return false;
+            }
+        };
 
         private final String pieceName;
 
@@ -86,14 +116,15 @@ public abstract class Piece {
             return this.pieceName;
         }
 
-        public boolean isKing(){
+        public boolean isKing(){ /// might cause issues later check TODO: CHECK THIS IS ISSUES WITH KING
             return false;
         }
+
+        public abstract boolean isRook();
 
         Piece_Type(final String pieceName) {
             this.pieceName = pieceName;
         }
-
     }
 
 }

@@ -26,7 +26,7 @@ public abstract class Player {
 
     }
 
-    private static Collection<Move> calculateAttacksOnTile(int piecePosition, Collection<Move> moves) {
+    protected static Collection<Move> calculateAttacksOnTile(int piecePosition, Collection<Move> moves) {
         final List<Move> attackMoves = new ArrayList<>();
         for(Move move : moves){
             if(piecePosition == move.getDestinationCoordinate()){
@@ -100,7 +100,7 @@ public abstract class Player {
     public abstract Collection<Piece> getActivePieces();
     public abstract Team getTeam();
     public abstract Player getOpponent();
-
+    protected abstract Collection <Move> calculateKingCastles(Collection<Move> playerLegals, Collection <Move> opponentLegals);
 
 
 
