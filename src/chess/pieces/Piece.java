@@ -77,10 +77,20 @@ public abstract class Piece {
             public boolean isRook(){
                 return false;
             }
+
+            @Override
+            public boolean isKing() {
+                return false;
+            }
         },
         KNIGHT( "N"){
             @Override
             public boolean isRook(){
+                return false;
+            }
+
+            @Override
+            public boolean isKing() {
                 return false;
             }
         },
@@ -89,11 +99,21 @@ public abstract class Piece {
             public boolean isRook(){
                 return false;
             }
+
+            @Override
+            public boolean isKing() {
+                return false;
+            }
         },
         ROOK("R"){
             @Override
             public boolean isRook(){
                 return true;
+            }
+
+            @Override
+            public boolean isKing() {
+                return false;
             }
         },
         QUEEN( "Q"){
@@ -101,11 +121,21 @@ public abstract class Piece {
             public boolean isRook(){
                 return false;
             }
+
+            @Override
+            public boolean isKing() {
+                return false;
+            }
         },
         KING( "K"){
             @Override
             public boolean isRook(){
                 return false;
+            }
+
+            @Override
+            public boolean isKing() {
+                return true;
             }
         };
 
@@ -116,11 +146,9 @@ public abstract class Piece {
             return this.pieceName;
         }
 
-        public boolean isKing(){ /// might cause issues later check TODO: CHECK THIS IS ISSUES WITH KING
-            return false;
-        }
 
         public abstract boolean isRook();
+        public abstract boolean isKing();
 
         Piece_Type(final String pieceName) {
             this.pieceName = pieceName;

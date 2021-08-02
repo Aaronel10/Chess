@@ -6,6 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class Tile {
+    public int getTileCoordinate() {
+        return tileCoordinate;
+    }
+
     protected final int tileCoordinate;
 
     private static final Map<Integer, EmptyTile> EMPTY_TILES_Cache = createAllPossibleEmptyTiles();

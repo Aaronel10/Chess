@@ -71,7 +71,4 @@ public class King extends Piece {
         return Piece.Piece_Type.KING.toString();
     }
 
-    public Boolean isKing(){
-        return true;
-    }
 }

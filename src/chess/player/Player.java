@@ -20,7 +20,10 @@ public abstract class Player {
            final Collection<Move> legalMoves,
            final Collection<Move> opponentMoves){
         this.board = board;
-        this.legalMoves = legalMoves;
+        Collection<Move> myMoves = new ArrayList<>();
+        myMoves.addAll(legalMoves);
+        myMoves.addAll(calculateKingCastles(legalMoves, opponentMoves)); // using array list rather than guava iterable
+        this.legalMoves = myMoves;
         this.playerKing = establishKing();
         this.isInCheck = !Player.calculateAttacksOnTile(this.playerKing.getPiecePosition(), opponentMoves).isEmpty();
 

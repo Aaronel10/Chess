@@ -5,6 +5,7 @@ import chess.board.Board;
 import chess.board.Move;
 import chess.board.Tile;
 import chess.pieces.Piece;
+import chess.pieces.Rook;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -42,7 +43,8 @@ public class WhitePlayer extends Player {
                 if(calculateAttacksOnTile(61, opponentLegals).isEmpty() &&
                 calculateAttacksOnTile(62, opponentLegals).isEmpty() && rook.getPiece().getPieceType().isRook()){
                     // If you reached here its because the king can kingside castle
-                    kingCastles.add(null); // todo : add castleMove later
+                    kingCastles.add(new Move.KingSideCastleMove(this.board, this.playerKing,62,
+                            (Rook)rook.getPiece(), rook.getTileCoordinate(), 61));
                 }
             }
         }
@@ -51,7 +53,8 @@ public class WhitePlayer extends Player {
             // white queen side castle
             Tile rook = this.board.getTile(56);
             if(rook.isTileOccupied() && rook.getPiece().isFirstMove()){
-                kingCastles.add(null); // TODO: add castle move later
+                kingCastles.add(new Move.QueenSideCastleMove(this.board, this.playerKing,
+                        58,(Rook)rook.getPiece(), rook.getTileCoordinate(), 59));
             }
         }
         return Collections.unmodifiableList(kingCastles);
