@@ -18,8 +18,12 @@ public class Knight extends Piece{
     private final static int[] possible_moves = {-17, -15, -10, -6, 6, 10, 15, 17};
 
     public Knight(final int piecePosition,final Team pieceTeam) {
-        super(piecePosition, pieceTeam, Piece_Type.KNIGHT);
+        super(piecePosition, pieceTeam, Piece_Type.KNIGHT, true);
     }
+    public Knight(final int piecePosition,final Team pieceTeam, boolean isFirstMove) {
+        super(piecePosition, pieceTeam, Piece_Type.KNIGHT, isFirstMove);
+    }
+
 
     @Override
     public Collection<Move> calculateLegalMoves(Board board) {

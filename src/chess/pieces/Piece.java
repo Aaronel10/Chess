@@ -25,12 +25,12 @@ public abstract class Piece {
     }
 
 
-    Piece(final int piecePosition, final Team pieceTeam, final Piece_Type pieceType)
+    Piece(final int piecePosition, final Team pieceTeam, final Piece_Type pieceType, final boolean isFirstMove)
     {
         this.pieceType = pieceType;
         this.piecePosition = piecePosition;
         this.pieceTeam = pieceTeam;
-        this.isFirstMove = false; // needs work still
+        this.isFirstMove = isFirstMove;
         this.cachedHashCode = computeHashCode();
     }
 
