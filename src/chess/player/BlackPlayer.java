@@ -51,10 +51,14 @@ public class BlackPlayer extends Player{
                 !this.board.getTile(3).isTileOccupied()){
             // black queen side castle
             Tile rook = this.board.getTile(0);
-            if(rook.isTileOccupied() && rook.getPiece().isFirstMove()){
+            if(rook.isTileOccupied() && rook.getPiece().isFirstMove() &&
+                    Player.calculateAttacksOnTile(2, opponentLegals).isEmpty() &&
+                    Player.calculateAttacksOnTile(3, opponentLegals).isEmpty() &&
+                    rook.getPiece().getPieceType().isRook()){
                 kingCastles.add(new Move.QueenSideCastleMove(this.board, this.playerKing,
                         2,(Rook)rook.getPiece(), rook.getTileCoordinate(), 3));
             }
+
         }
         return Collections.unmodifiableList(kingCastles);
     }
