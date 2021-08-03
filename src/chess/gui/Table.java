@@ -2,27 +2,42 @@ package chess.gui;
 
 import chess.board.Board;
 import chess.board.BoardUtils;
+import chess.board.Move;
 import chess.board.Tile;
+import chess.pieces.Piece;
+import chess.player.MoveStatus;
+import chess.player.MoveTransition;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.swing.SwingUtilities.isLeftMouseButton;
+import static javax.swing.SwingUtilities.isRightMouseButton;
+
 public class Table {
     private final JFrame gameFrame;
     private final BoardPanel boardPanel;
-    private final Board chessBoard;
+    private Board chessBoard;
     private static String defaultPieceImagesPath = "ChessPics/";
 
+    private Tile sourceTile;
+    private Tile destinationTile;
+    private Piece humanMovedPiece;
+
+
+
     private final Color lightTileColor = Color.decode("#FFFACD");
-    private final Color darkTileColor = Color.decode("#593E1A");
+    private final Color darkTileColor = Color.decode("#08811a");
 
     private final static Dimension OUTER_FRAME_DIMENSION = new Dimension(600, 600);
     private final static Dimension BOARD_PANEL_DIMENSION = new Dimension(400, 350);
@@ -85,9 +100,19 @@ public class Table {
             }
             setPreferredSize(BOARD_PANEL_DIMENSION);
             validate();
-
-
         }
+
+        public void drawBoard(final Board board){
+        //basically a repaint method
+            removeAll();
+            for(final TilePanel tilePanel: boardTiles){
+            tilePanel.drawTile(board);
+            add(tilePanel);
+            }
+            validate();
+            repaint();
+        }
+
     }
 
     private class TilePanel extends JPanel{
@@ -100,7 +125,74 @@ public class Table {
             assignTileColor();
             assignTilePieceIcon(chessBoard);
 
+            addMouseListener(new MouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if(isRightMouseButton(e)) {
+                        sourceTile = null;
+                        destinationTile = null;
+                        humanMovedPiece = null;
+                    }
+                         else if (isLeftMouseButton(e)){
+                             if(sourceTile == null){
+                                 sourceTile = chessBoard.getTile(tileId);
+                                 humanMovedPiece = sourceTile.getPiece();
+                                 if(humanMovedPiece == null){
+                                     sourceTile = null;
+                                 }
+                             } else{
+                                 destinationTile = chessBoard.getTile(tileId);
+                                 final Move move = Move.MoveFactory.createMove(chessBoard,sourceTile.getTileCoordinate(), destinationTile.getTileCoordinate());
+                                 final MoveTransition transition = chessBoard.currentPlayer().makeMove(move);
+                                 if(transition.getMoveStatus().isDone()){
+                                     //means it was the right move to make
+                                     chessBoard = transition.getTransitionBoard();
+                                     //TODO add move that was made to move log
+                                 }
+                                 sourceTile = null;
+                                 destinationTile = null;
+                                 humanMovedPiece = null;
+                             }
+                             SwingUtilities.invokeLater(new Runnable() {
+                                 @Override
+                                 public void run() {
+                                     boardPanel.drawBoard(chessBoard);
+                                 }
+                             });
+                    }
+
+
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+
+                }
+            });
+
             validate();
+        }
+
+        public void drawTile(final Board board){
+            assignTileColor();
+            assignTilePieceIcon(board);
+            validate();
+            repaint();
         }
 
         private void assignTilePieceIcon(final Board board){

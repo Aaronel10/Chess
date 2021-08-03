@@ -6,6 +6,7 @@ import chess.board.Move;
 import java.util.concurrent.Future;
 
 public class MoveTransition {
+
     private final Board transitionBoard;
     private final Move move;
     private final MoveStatus moveStatus;
@@ -18,5 +19,9 @@ public class MoveTransition {
 
     public MoveStatus getMoveStatus() {
         return this.moveStatus;
+    }
+
+    public Board getTransitionBoard() {
+        return transitionBoard;
     }
 }
