@@ -15,6 +15,7 @@ public abstract class Piece {
     // because our object is immutable we can just use a member field for hashcode instead of computing it each time
     private final int cachedHashCode;
 
+
     public int getPiecePosition() {
         return piecePosition;
     }

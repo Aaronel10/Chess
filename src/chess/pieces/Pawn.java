@@ -36,8 +36,8 @@ public class Pawn extends Piece{
                 // eligible for 2nd move up
                 legalMoves.add(new MajorMove(board, this, possibleDestinationCoordinate)); // this needs to be changed
             } else if(candidateOffset == 16 && this.isFirstMove() &&
-                    (BoardUtils.SEVENTH_RANK[this.piecePosition] && this.pieceTeam.isBlack()) ||
-                    (BoardUtils.SECOND_RANK[this.piecePosition] && this.pieceTeam.isWhite())){ // handles pawn jump
+                    ((BoardUtils.SEVENTH_RANK[this.piecePosition] && this.pieceTeam.isBlack()) ||
+                    (BoardUtils.SECOND_RANK[this.piecePosition] && this.pieceTeam.isWhite()))){ // handles pawn jump
                 // some of this is overkill instead of just checking if its the first move but Ill go with this in case I want to make puzzles
                 int behindDestinationCoordinate = this.piecePosition + (this.pieceTeam.getDirection() * 8);
                 if(!board.getTile(behindDestinationCoordinate).isTileOccupied() &&
