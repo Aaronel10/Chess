@@ -46,7 +46,7 @@ public class Pawn extends Piece{
                 int behindDestinationCoordinate = this.piecePosition + (this.pieceTeam.getDirection() * 8);
                 if(!board.getTile(behindDestinationCoordinate).isTileOccupied() &&
                         !board.getTile(possibleDestinationCoordinate).isTileOccupied()){
-                    legalMoves.add(new MajorMove(board, this, possibleDestinationCoordinate)); // this needs to be changed
+                    legalMoves.add(new PawnJump(board, this, possibleDestinationCoordinate)); // this needs to be changed
                 }
             } else if(candidateOffset == 7 &&
                     !((BoardUtils.EIGHTH_COLUMN[this.piecePosition] && this.pieceTeam.isWhite()) ||
@@ -55,7 +55,7 @@ public class Pawn extends Piece{
                     Piece pieceOnCandidate = board.getTile(possibleDestinationCoordinate).getPiece();
                     if(this.pieceTeam != pieceOnCandidate.getPieceTeam()){
                         // attack viable since enemy piece
-                        legalMoves.add(new MajorMove(board,this, possibleDestinationCoordinate));
+                        legalMoves.add(new PawnAttackMove(board,this, possibleDestinationCoordinate, pieceOnCandidate));
 
                     }
                 }
@@ -66,7 +66,7 @@ public class Pawn extends Piece{
                     Piece pieceOnCandidate = board.getTile(possibleDestinationCoordinate).getPiece();
                     if(this.pieceTeam != pieceOnCandidate.getPieceTeam()){
                         // attack viable since enemy piece
-                        legalMoves.add(new MajorMove(board,this, possibleDestinationCoordinate));
+                        legalMoves.add(new PawnAttackMove(board,this, possibleDestinationCoordinate, pieceOnCandidate));
 
                     }
                 }
